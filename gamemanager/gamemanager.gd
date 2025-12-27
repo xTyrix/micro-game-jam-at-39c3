@@ -79,6 +79,9 @@ func _next_level() -> void:
 	%Timer.stop()
 	InputManager.set_is_in_game(true)
 	level += 1
+	if current_level_node:
+		current_level_node.queue_free()
+		current_level_node = null
 	_show_level()
 
 func _show_level() -> void:
@@ -123,7 +126,7 @@ func _show_credits() -> void:
 	menu_layer.add_child(credits)
 	
 func _show_title_screen() -> void:
-	health = 3
+	health = max_health
 	$MenuLayer/GameUI.visible = false
 	InputManager.set_is_in_game(false)
 	var title_screen: Node = load("res://ui/screens/title-screen/title_screen.tscn").instantiate()
