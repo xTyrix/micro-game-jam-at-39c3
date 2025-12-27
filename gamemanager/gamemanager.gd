@@ -34,6 +34,10 @@ func _start_game() -> void:
 	level = 0
 	_show_controls()
 
+func _process(_delta: float) -> void:
+	%TimerLabel.text = str(round(%Timer.time_left * 10)/10)
+	%HealthLabel.text = str(health)
+
 #region Pausing
 
 func pause():
@@ -55,26 +59,30 @@ func resume():
 
 
 func _next_level() -> void:
+	$MenuLayer/GameUI.visible = true
+	%Timer.stop()
 	InputManager.set_is_in_game(true)
 	level += 1
 	_show_level()
 
 func _show_level() -> void:
 	InputManager.set_is_in_game(true)
-	var next_level = levels.pick_random().instantiate()
+	var next_level: Level = levels.pick_random().instantiate()
 	next_level.win.connect(_next_level)
-	if next_level.has_signal("reset"):
-		next_level.reset.connect(_reload_current_level)
+	next_level.lose.connect(_lose_level)
 	add_child(next_level)
+	%Timer.start(next_level.timeout)
 	current_level_node = next_level
 
 func _lose_level() -> void:
+	%Timer.stop()
 	health = health - 1
-	if health == 0:
+	if health == 0:	
 		_show_lose_screen()
 	else:
 		_next_level()
-	
+	if current_level_node:
+		current_level_node.queue_free()
 
 #endregion
 
@@ -83,6 +91,8 @@ func _lose_level() -> void:
 
 func _show_lose_screen() -> void:
 	InputManager.set_is_in_game(false)
+	if current_level_node:
+		current_level_node.queue_free()
 	var win_screen: Control = load("res://ui/screens/win-screen/win_screen.tscn").instantiate()
 	win_screen.tree_exited.connect(_show_title_screen)
 	add_child(win_screen)
@@ -93,6 +103,7 @@ func _show_credits() -> void:
 	menu_layer.add_child(credits)
 	
 func _show_title_screen() -> void:
+	$MenuLayer/GameUI.visible = false
 	InputManager.set_is_in_game(false)
 	var title_screen: Node = load("res://ui/screens/title-screen/title_screen.tscn").instantiate()
 	title_screen.start_game.connect(_start_game)

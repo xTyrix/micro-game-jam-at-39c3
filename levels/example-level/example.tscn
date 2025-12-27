@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsumwqbyhh2jj"]
+
+[ext_resource type="Script" uid="uid://c5pjtkxt80lgm" path="res://levels/example-level/example.gd" id="1_4xgwq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ujxwy"]
+font_size = 35
+
+[node name="Example" type="Node2D"]
+script = ExtResource("1_4xgwq")
+timeout = 3.0
+
+[node name="Label" type="Label" parent="."]
+offset_left = 342.0
+offset_top = 154.0
+offset_right = 773.0
+offset_bottom = 469.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "This is the example Level.
+Nothing to do here :3"
+label_settings = SubResource("LabelSettings_ujxwy")

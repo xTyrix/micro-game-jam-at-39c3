@@ -32,14 +32,14 @@ layout_mode = 2
 custom_minimum_size = Vector2(731.345, 0)
 layout_mode = 2
 size_flags_vertical = 3
-text = "You won!"
+text = "You lost"
 label_settings = SubResource("LabelSettings_rbmgw")
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-text = "Congratulations and thank you for playing"
+text = "Score:"
 label_settings = SubResource("LabelSettings_rvyxm")
 horizontal_alignment = 1
 
