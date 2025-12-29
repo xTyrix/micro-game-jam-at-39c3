@@ -129,10 +129,10 @@ func _lose_level() -> void:
 
 func _show_lose_screen() -> void:
 	InputManager.set_is_in_game(false)
-	var win_screen: Control = load("res://ui/screens/win-screen/win_screen.tscn").instantiate()
-	win_screen.tree_exited.connect(_show_title_screen)
-	add_child(win_screen)
-	win_screen.set_score(score)
+	var game_over_screen: Control = load("res://ui/screens/win-screen/game_over_screen.tscn").instantiate()
+	game_over_screen.tree_exited.connect(_show_title_screen)
+	add_child(game_over_screen)
+	game_over_screen.set_score(score)
 	for child in get_children():
 		if child is Level:
 			child.queue_free()
